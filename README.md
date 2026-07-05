@@ -155,27 +155,28 @@ python -m pytest
 # Run with coverage:
 python -m pytest --cov
 ```
-What it checks:
-Empty States & Null Handling (5 tests)
-✅ Empty pet with no tasks returns "No tasks scheduled"
-✅ Owner with no pets returns empty task list (not crash)
-✅ Filter by non-existent pet name doesn't apply filter (returns all)
-✅ Filter by unknown status returns empty list
-✅ Aggregate tasks across multiple pets works correctly
-Sorting & Time Boundary Cases (3 tests)
-✅ Tasks at exact midnight (00:00) sort correctly
-✅ Two tasks at exact same time maintain stable order
-✅ Unknown priority values sort last (after high/medium/low)
-Conflict Detection Edge Cases (3 tests)
-✅ Two tasks starting at exact same time flagged as conflict
-✅ One task completely containing another detected as conflict
-✅ Tasks overlapping by 1 minute detected as conflict
-Recurrence & Filtering Edge Cases (5 tests)
-✅ Unknown frequency (monthly, etc.) returns None safely
-✅ Zero-duration recurring tasks still create next occurrence
-✅ Schedule summary correctly counts 0 high-priority tasks
-✅ Filter by "completed" status returns only completed tasks
-✅ Filter by "pending" status returns only pending tasks
+
+### What it checks:
+#### Empty States & Null Handling (5 tests)
+- Empty pet with no tasks returns "No tasks scheduled"
+- Owner with no pets returns empty task list (not crash)
+- Filter by non-existent pet name doesn't apply filter (returns all)
+- Filter by unknown status returns empty list
+- Aggregate tasks across multiple pets works correctly
+#### Sorting & Time Boundary Cases (3 tests)
+- Tasks at exact midnight (00:00) sort correctly
+- Two tasks at exact same time maintain stable order
+- Unknown priority values sort last (after high/medium/low)
+#### Conflict Detection Edge Cases (3 tests)
+- Two tasks starting at exact same time flagged as conflict
+- One task completely containing another detected as conflict
+- Tasks overlapping by 1 minute detected as conflict
+#### Recurrence & Filtering Edge Cases (5 tests)
+- Unknown frequency (monthly, etc.) returns None safely
+- Zero-duration recurring tasks still create next occurrence
+- Schedule summary correctly counts 0 high-priority tasks
+- Filter by "completed" status returns only completed tasks
+- Filter by "pending" status returns only pending tasks
 
 Sample test output:
 

@@ -237,16 +237,41 @@ if st.button("Generate Schedule"):
     if len(filtered_tasks) == 0:
         st.warning("No tasks match the selected filters.")
     else:
-        st.success(f"📋 {len(filtered_tasks)} task(s) scheduled")
+        # Display metrics
+        col1, col2, col3, col4 = st.columns(4)
         total_duration = sum(t.duration_minutes for t in filtered_tasks)
-        st.write(f"**Total Duration:** {total_duration} minutes")
+        pending_count = sum(1 for t in filtered_tasks if t.status.value == "pending")
+        completed_count = sum(1 for t in filtered_tasks if t.status.value == "completed")
 
-        st.write("**Filtered & Sorted Tasks:**")
+        with col1:
+            st.metric("Total Tasks", len(filtered_tasks))
+        with col2:
+            st.metric("Total Duration", f"{total_duration} min")
+        with col3:
+            st.metric("Pending", pending_count)
+        with col4:
+            st.metric("Completed", completed_count)
+
+        st.divider()
+
+        # Build table data
+        table_data = []
         for i, task in enumerate(filtered_tasks, 1):
             due_time = task.due_date.strftime("%H:%M") if task.due_date else "N/A"
             pet_name = next(p.name for p in st.session_state.owner.get_pets() if p.pet_id == task.pet_id)
             priority_emoji = "🔴" if task.priority == "high" else "🟡" if task.priority == "medium" else "🟢"
             status_icon = "✅" if task.status.value == "completed" else "⏳"
 
-            st.write(f"{i}. {status_icon} {priority_emoji} **{task.title}** ({pet_name})")
-            st.write(f"   ⏰ {due_time} | ⏱️ {task.duration_minutes} min")
+            table_data.append({
+                "#": i,
+                "Status": status_icon,
+                "Priority": priority_emoji,
+                "Task": task.title,
+                "Pet": pet_name,
+                "Time": due_time,
+                "Duration (min)": task.duration_minutes,
+                "Recurrence": task.frequency
+            })
+
+        # Display as table
+        st.dataframe(table_data, use_container_width=True, hide_index=True)

@@ -58,16 +58,16 @@ Paste a sample of your app's CLI or Streamlit output here so a reader can see wh
 
 ```bash
 # Run the full test suite:
-pytest
+python -m pytest
 
 # Run with coverage:
-pytest --cov
+python -m pytest --cov
 ```
 
 Sample test output:
 
 ```
-# Paste your pytest output here
+From main.py
 
 ============================================================
 🐾 PAWPAL+ - TODAY'S SCHEDULE
@@ -101,7 +101,42 @@ Pets: Mochi, Dave
 ============================================================
 ```
 
+```
+What it checks:
+Empty States & Null Handling (5 tests)
+✅ Empty pet with no tasks returns "No tasks scheduled"
+✅ Owner with no pets returns empty task list (not crash)
+✅ Filter by non-existent pet name doesn't apply filter (returns all)
+✅ Filter by unknown status returns empty list
+✅ Aggregate tasks across multiple pets works correctly
+Sorting & Time Boundary Cases (3 tests)
+✅ Tasks at exact midnight (00:00) sort correctly
+✅ Two tasks at exact same time maintain stable order
+✅ Unknown priority values sort last (after high/medium/low)
+Conflict Detection Edge Cases (3 tests)
+✅ Two tasks starting at exact same time flagged as conflict
+✅ One task completely containing another detected as conflict
+✅ Tasks overlapping by 1 minute detected as conflict
+Recurrence & Filtering Edge Cases (5 tests)
+✅ Unknown frequency (monthly, etc.) returns None safely
+✅ Zero-duration recurring tasks still create next occurrence
+✅ Schedule summary correctly counts 0 high-priority tasks
+✅ Filter by "completed" status returns only completed tasks
+✅ Filter by "pending" status returns only pending tasks
 
+# Paste your pytest output here
+
+platform win32 -- Python 3.13.13, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\Dell User\Desktop\Codepath\ai110-module2show-pawpal-starter
+plugins: anyio-4.14.1
+collected 34 items                                                                                                                       
+
+tests\test_pawpal.py ..................................                                                                            [100%]
+
+========================================================== 34 passed in 0.55s ====
+
+Confidence Level : ⭐⭐⭐⭐☆
+```
 
 ## 📐 Smarter Scheduling
 
@@ -120,8 +155,8 @@ Describe your app in numbered steps so a reader can follow along without watchin
 
 1. Add a pet with an owner, just name and species
 2. Add a task for the pet, including description, duration, and due date
-3. C
-4. <!-- Describe this step -->
-5. Generate today's schedule as owner for all pets, prioritized by due date
+3. Add pets and tasks as desired
+4. Generate schedule for all pets, prioritized by due date. Can filter by pet or task completion
+5. Warning will be printed if tasks for one pet overlap or occur simultaneously
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->

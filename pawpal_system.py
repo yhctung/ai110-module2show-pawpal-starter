@@ -144,10 +144,13 @@ class Scheduler:
         }
 
     def prioritize_tasks(self, tasks: List[Task]) -> List[Task]:
-        """Sort and prioritize tasks by due date (overdue first, then soonest due)."""
+        """Sort and prioritize tasks by overdue status, manual priority, then due date."""
+        priority_order = {"high": 0, "medium": 1, "low": 2}
+
         def sort_key(task):
             is_overdue = 0 if task.is_overdue() else 1
-            return (is_overdue, task.due_date if task.due_date else datetime.max)
+            priority_value = priority_order.get(task.priority, 3)
+            return (is_overdue, priority_value, task.due_date if task.due_date else datetime.max)
 
         return sorted(tasks, key=sort_key)
 

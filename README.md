@@ -68,7 +68,40 @@ Sample test output:
 
 ```
 # Paste your pytest output here
+
+============================================================
+🐾 PAWPAL+ - TODAY'S SCHEDULE
+============================================================
+Owner: Ryan
+Date: 2026-07-05
+Pets: Mochi, Dave
+============================================================
+
+📋 Total Tasks: 4
+⏱️  Total Duration: 75 minutes
+
+1. 🔴 Morning Walk
+   Time: 08:00 | Duration: 30 min
+   Pet: Mochi | Take Mochi for a 30-minute walk in the park
+
+2. 🔴 Feed Dave
+   Time: 12:00 | Duration: 10 min
+   Pet: Dave | Give Dave his lunch
+
+3. 🟡 Afternoon Playtime
+   Time: 14:30 | Duration: 20 min
+   Pet: Mochi | Play fetch with Mochi in the backyard
+
+4. 🟢 Brush Dave
+   Time: 16:00 | Duration: 15 min
+   Pet: Dave | Brush Dave's fur to prevent matting
+
+============================================================
+📝 Summary: Scheduled 4 task(s) for 2026-07-05. Total duration: 75 minutes. High priority: 2 task(s).
+============================================================
 ```
+
+
 
 ## 📐 Smarter Scheduling
 
@@ -76,19 +109,19 @@ Sample test output:
 
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting | Scheduler.prioritize_tasks, Scheduler.sort_by_time | 1st sorts tasks by urgency: overdue tasks first, then by due date (soonest first). 2nd sorts tasks chronologically by time of day (HH:MM), which is useful for viewing schedule in strict time order. |
+| Filtering | Scheduler.filter_tasks | filters tasks by completion status and/or pet name, or neither. Enables skipping completed tasks or focusing on specific pet |
+| Conflict handling | Scheduler.detect_conflicts | detects overlapping time slots by calculating time windows. returns warning string |
+| Recurring tasks | Scheduler.complete_task, Task.create_next_occurrence| Marks task as completed with timestamp, then calls create_next_occurrence() on the task. If it's recurring, it auto-adds the next occurrence to the pet's task list. Task.create_next_occurrence returns the next task instance (or None if not recurring) |
 
 ## 📸 Demo Walkthrough
 
 Describe your app in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
+1. Add a pet with an owner, just name and species
+2. Add a task for the pet, including description, duration, and due date
+3. C
 4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+5. Generate today's schedule as owner for all pets, prioritized by due date
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
